@@ -257,6 +257,33 @@ WHERE an_fabricatie > 2019
 );
 
 
+SELECT nume, prenume, departament
+FROM ANGAJATI
+WHERE tara_de_origine = 'România' OR tara_de_origine = 'Bulgaria';
+
+SELECT AVG(buget_anual) AS buget_mediu
+FROM DEPARTAMENTE;
+
+SELECT MIN(buget_anual) AS buget_minim
+FROM DEPARTAMENTE;
+
+SELECT nume, prenume, functie
+FROM ANGAJATI
+WHERE departament = 'HR' AND sex = 'F';
+
+SELECT COUNT(*) AS numar_angajati
+FROM ANGAJATI
+WHERE departament = 'Marketing';
+
+
+SELECT departament, COUNT(*) AS numar_angajati
+FROM ANGAJATI
+GROUP BY departament
+HAVING COUNT(*) > 5;
+
+SELECT *
+FROM telefoane
+WHERE marca_tel = 'Apple';
 
 DELETE FROM angajati_training
 WHERE id_angajat = 6;
