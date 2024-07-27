@@ -14,11 +14,14 @@ The scope of this project is to use all the SQL knowledge gained throught the So
 You can find below the database schema that was generated through Reverse Engineer and which contains all the tables and the relationships between them.
 The tables are connected in the following way:
 
-**nume tabela 1** is connected with **nume tabela 2** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
-**nume tabela 3** is connected with **nume tabela 4** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
-**nume tabela 5** is connected with **nume tabela 6** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
-...........
-**nume tabela n** is connected with **nume tabela n+1** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
+The **departamente** table is connected to the **angajati** table through a **one-to-many** relationship implemented by using **departamente.nume_departament** as the primary key and **angajati.departament** as the foreign key.
+ The **angajati** table is connected to the **masini** table through a **one-to-many** relationship implemented by using **angajati.id** as the primary key and **masini.id_angajat** as the foreign key. 
+The **angajati** table is connected to the **telefoane** table through a **one-to-many** relationship implemented by using **angajati.id** as the primary key and **telefoane.id_angajat** as the foreign key.
+ The **angajati** table is connected to the **angajati_training** table through a **one-to-many** relationship implemented by using **angajati.id** as the primary key and **angajati_training.id_angajat** as the foreign key. 
+The **training** table is connected to the **angajati_training** table through a **one-to-many** relationship implemented by using **training.id_training** as the primary key and **angajati_training.id_training** as the foreign key.
+
+![image](https://github.com/user-attachments/assets/1af8cfe3-0442-43e4-9a98-40436e33c963)
+
 
 ## Database Queries
 
@@ -285,20 +288,129 @@ WHERE numar_inmatriculare = 'IS-101-GHI';
 ### DQL (Data Query Language)
 In order to simulate various scenarios that might happen in real life I created the following queries that would cover multiple potential real-life situations:
 
-Inserati aici toate instructiunile de SELECT pe care le-ati scris folosind filtrarile necesare astfel incat sa extrageti doar datele de care aveti nevoie Incercati sa acoperiti urmatoarele:
-- where
-- AND
-- OR
-- NOT
-- like
-- inner join
-- left join
-- OPTIONAL: right join
-- OPTIONAL: cross join
-- functii agregate
-- group by
-- having
-- OPTIONAL DAR RECOMANDAT: Subqueries - nu au fost in scopul cursului. Puteti sa consultati tutorialul asta si daca nu intelegeti ceva contactati fie trainerul, fie coordonatorul de grupa
+```
+-- We want to see what departments have employees
+SELECT DISTINCT(departament) FROM ANGAJATI;
+```
+
+```
+SELECT * FROM DEPARTAMENTE;
+```
+
+```
+SELECT * FROM TELEFOANE;
+```
+
+```
+-- Searching for men who work in IT
+SELECT prenume, nume, departament
+FROM angajati
+WHERE sex = 'M' AND departament = 'IT';
+```
+
+```
+-- Count how many phones of each brand we have. We want to see which are the most common (more than 2 phones).
+SELECT COUNT(numar_inventar) as numar, marca_tel 
+FROM telefoane
+GROUP BY marca_tel
+HAVING numar > 2;
+```
+
+```
+-- We want to see the new cars or those made by Dacia.
+SELECT numar_inmatriculare, an_fabricatie, marca_auto, id_angajat
+FROM masini
+WHERE stare_tehnica = 'Noua' OR marca_auto = 'Dacia';
+```
+
+```
+-- We want to see non-HR trainings with more than 20 participants.
+SELECT id_training, nume_training, locatie, numar_participanti
+FROM training
+WHERE NOT(departament_responsabil = 'HR' OR numar_participanti <= 20);
+```
+
+```
+ -- We want to see every phone whose name starts with “p” or begins with a letter, continues with “Phone“, then continues with any string.
+SELECT numar_inventar, marca_tel, model_tel, id_angajat
+FROM telefoane
+WHERE model_tel LIKE('P%') OR model_tel LIKE('_Phone%');
+```
+
+```
+-- We want to see where each employee works
+SELECT angajati.id, angajati.nume, angajati.prenume, angajati.departament, departamente.locatie
+FROM angajati INNER JOIN departamente 
+ON angajati.departament = departamente.nume_departament;
+```
+
+```
+-- We want to see which trainings each employee is enrolled in
+SELECT angajati.id, angajati.nume, angajati.prenume, angajati_training.id_training, training.nume_training
+FROM angajati LEFT JOIN angajati_training
+ON angajati.id = angajati_training.id_angajat
+INNER JOIN training
+ON  angajati_training.id_training = training.id_training;
+```
+
+```
+-- Search for employees with newer cars (after 2019)
+SELECT id, prenume, nume, functie, sex
+FROM angajati
+WHERE id IN (
+SELECT id_angajat
+FROM masini
+WHERE an_fabricatie > 2019
+);
+```
+
+```
+-- Find employees from Romania or Bulgaria
+SELECT nume, prenume, departament
+FROM ANGAJATI
+WHERE tara_de_origine = 'România' OR tara_de_origine = 'Bulgaria';
+```
+
+```
+-- Find the average budget for a department
+SELECT AVG(buget_anual) AS buget_mediu
+FROM DEPARTAMENTE;
+```
+
+```
+-- Find the smallest budget for a department
+SELECT MIN(buget_anual) AS buget_minim
+FROM DEPARTAMENTE;
+```
+
+```
+-- Count the female HR employees
+SELECT nume, prenume, functie
+FROM ANGAJATI
+WHERE departament = 'HR' AND sex = 'F';
+```
+
+```
+-- Count the employees in the marketing department
+SELECT COUNT(*) AS numar_angajati
+FROM ANGAJATI
+WHERE departament = 'Marketing';
+```
+
+```
+-- Search departments with at least 5 employees
+SELECT departament, COUNT(*) AS numar_angajati
+FROM ANGAJATI
+GROUP BY departament
+HAVING COUNT(*) > 5;
+```
+
+```
+-- Look up all Apple phones used in the company
+SELECT *
+FROM telefoane
+WHERE marca_tel = 'Apple';
+```
 
 After the testing process, I deleted the data that was no longer relevant in order to preserve the database clean:
 
@@ -327,86 +439,5 @@ WHERE tara_de_origine = 'Regatul Unit';
 
 ### Conclusions
 Inserati aici o concluzie cu privire la ceea ce ati lucrat, gen lucrurile pe care le-ati invatat, lessons learned, un rezumat asupra a ceea ce ati facut si orice alta informatie care vi se pare relevanta pentru o concluzie finala asupra a ceea ce ati lucrat
-
-
-
-
-SELECT DISTINCT(departament) FROM ANGAJATI;
-
-SELECT * FROM DEPARTAMENTE;
-
-SELECT * FROM TELEFOANE;
-
-SELECT prenume, nume, departament
-FROM angajati
-WHERE sex = 'M' AND departament = 'IT';
-
-SELECT COUNT(numar_inventar) as numar, marca_tel 
-FROM telefoane
-GROUP BY marca_tel
-HAVING numar > 2;
-
-SELECT numar_inmatriculare, an_fabricatie, marca_auto, id_angajat
-FROM masini
-WHERE stare_tehnica = 'Noua' OR marca_auto = 'Dacia';
-
-SELECT id_training, nume_training, locatie, numar_participanti
-FROM training
-WHERE NOT(departament_responsabil = 'HR' OR numar_participanti <= 20);
-
--- Folosesc Like
-SELECT numar_inventar, marca_tel, model_tel, id_angajat
-FROM telefoane
-WHERE model_tel LIKE('P%') OR model_tel LIKE('_Phone%');
-
-SELECT angajati.id, angajati.nume, angajati.prenume, angajati.departament, departamente.locatie
-FROM angajati INNER JOIN departamente 
-ON angajati.departament = departamente.nume_departament;
-
-
-SELECT angajati.id, angajati.nume, angajati.prenume, angajati_training.id_training, training.nume_training
-FROM angajati LEFT JOIN angajati_training
-ON angajati.id = angajati_training.id_angajat
-INNER JOIN training
-ON  angajati_training.id_training = training.id_training;
-
-
-SELECT id, prenume, nume, functie, sex
-FROM angajati
-WHERE id IN (
-SELECT id_angajat
-FROM masini
-WHERE an_fabricatie > 2019
-);
-
-
-SELECT nume, prenume, departament
-FROM ANGAJATI
-WHERE tara_de_origine = 'România' OR tara_de_origine = 'Bulgaria';
-
-SELECT AVG(buget_anual) AS buget_mediu
-FROM DEPARTAMENTE;
-
-SELECT MIN(buget_anual) AS buget_minim
-FROM DEPARTAMENTE;
-
-SELECT nume, prenume, functie
-FROM ANGAJATI
-WHERE departament = 'HR' AND sex = 'F';
-
-SELECT COUNT(*) AS numar_angajati
-FROM ANGAJATI
-WHERE departament = 'Marketing';
-
-
-SELECT departament, COUNT(*) AS numar_angajati
-FROM ANGAJATI
-GROUP BY departament
-HAVING COUNT(*) > 5;
-
-SELECT *
-FROM telefoane
-WHERE marca_tel = 'Apple';
-
 
 
