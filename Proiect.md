@@ -1,5 +1,39 @@
+# Database Project for **Inserati aici numele aplicatiei pe care o testati**
+The scope of this project is to use all the SQL knowledge gained throught the Software Testing course and apply them in practice.
+
+**Application under test**: Company Management
+
+**Tools used**: MySQL Workbench
+
+**Database description:** The purpose of the database is to handle all data pertaining to a company in order to be able manage all resources related to that company
+
+**Database Schema:**
+
+![image](https://github.com/user-attachments/assets/a9552c69-3d35-4da7-a824-3d855fcb4cba)
+
+You can find below the database schema that was generated through Reverse Engineer and which contains all the tables and the relationships between them.
+The tables are connected in the following way:
+
+**nume tabela 1** is connected with **nume tabela 2** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
+**nume tabela 3** is connected with **nume tabela 4** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
+**nume tabela 5** is connected with **nume tabela 6** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
+...........
+**nume tabela n** is connected with **nume tabela n+1** through a **tip relatie** relationship which was implemented through **nume_tabela.nume_coloana_cheie_primara** as a primary key and **nume_tabela.nume_coloana_cheie_secundara** as a foreign key
+
+## Database Queries
+
+### DDL (Data Definition Language)
+The following instructions were written in the scope of CREATING the structure of the database (CREATE INSTRUCTIONS)
+
+```
 create database COMPANIE;
+```
+
+```
 use COMPANIE;
+```
+
+```
 create table DEPARTAMENTE (
 nume_departament varchar (20) primary key,
 data_infiintarii date,
@@ -8,17 +42,9 @@ functie varchar (20),
 contact bigint,
 locatie varchar (20)
 );
+```
 
-
-
-INSERT INTO DEPARTAMENTE (nume_departament, data_infiintarii, buget_anual, functie, contact, locatie) VALUES
-('IT', '2005-06-15', 500000, 'Suport Tehnic', 40712345678, 'București'),
-('HR', '2010-03-10', 300000, 'Resurse Umane', 40723456789, 'Cluj-Napoca'),
-('Finanțe', '2008-11-20', 700000, 'Gestionare Finanțe', 40734567890, 'Timișoara'),
-('Marketing', '2012-08-05', 400000, 'Promovare', 40745678901, 'Iași'),
-('Vânzări', '2007-01-30', 600000, 'Gestionare Vânzări', 40756789012, 'Constanța');
-
-
+```
 create table ANGAJATI(
 id int primary key auto_increment,
 nume varchar(30),
@@ -33,6 +59,154 @@ departament varchar (20),
 functie varchar (20),
 FOREIGN KEY (departament) REFERENCES DEPARTAMENTE(nume_departament)
 );
+```
+
+```
+
+create table MASINI (
+numar_inmatriculare varchar(40) primary key,
+id_angajat int,
+marca_auto varchar (15),
+model_auto varchar (20),
+an_fabricatie int,
+kilometraj int,
+stare_tehnica varchar (10),
+utilizare varchar (20),
+FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id)
+);
+```
+
+```
+create table TELEFOANE (
+numar_inventar int primary key,
+id_angajat int,
+marca_tel varchar (10),
+model_tel varchar (15),
+data_achizitie date,
+numar_tel bigint,
+stare varchar (10),
+data_ultima_actualizare_software date,
+FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id)
+);
+```
+
+```
+CREATE TABLE TRAINING (
+    id_training INT PRIMARY KEY AUTO_INCREMENT,
+    nume_training VARCHAR(50),
+    data_incepere DATE,
+    data_sfarsit DATE,
+    locatie VARCHAR(50),
+    departament_responsabil VARCHAR(20),
+    numar_participanti INT,
+    instructor VARCHAR(50),
+    contact_instructor BIGINT,
+    descriere TEXT
+);
+```
+
+```
+
+CREATE TABLE ANGAJATI_TRAINING (
+    id_angajat INT,
+    id_training INT,
+    data_participare DATE,
+    PRIMARY KEY (id_angajat, id_training),
+    FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id),
+    FOREIGN KEY (id_training) REFERENCES TRAINING(id_training)
+);
+```
+
+
+After the database and the tables have been created, a few ALTER instructions were written in order to update the structure of the database, as described below:
+
+```
+ALTER TABLE ANGAJATI
+DROP COLUMN oras_de_origine;
+```
+
+```
+ALTER TABLE TELEFOANE
+RENAME COLUMN data_ultima_actualizare_software TO ultima_actualizare;
+```
+
+```
+ALTER TABLE MASINI
+MODIFY COLUMN numar_inmatriculare VARCHAR(20);
+```
+
+```
+ALTER TABLE DEPARTAMENTE
+RENAME COLUMN functie TO rolul_departamentului;
+```
+
+
+### DML (Data Manipulation Language)
+In order to be able to use the database I populated the tables with various data necessary in order to perform queries and manipulate the data. In the testing process, this necessary data is identified in the Test Design phase and created in the Test Implementation phase.
+
+Below you can find all the insert instructions that were created in the scope of this project:
+
+Inserati aici toate instructiunile de INSERT pe care le-ati scris. Incercati sa folositi atat insert pe toate coloanele (fara sa precizati pe ce coloane se face insert) cat si insert pe cateva coloane (care necesita mentionarea explicita a coloanelor pe care se face insert). De asemenea, incercati sa acoperiti situatia in care inserati mai multe randuri in acelasi timp
+
+After the insert, in order to prepare the data to be better suited for the testing process, I updated some data in the following way:
+
+Inserati aici toate instructiunile de UPDATE pe care le-ati scris folosind filtrarile necesare astfel incat sa actualizati doar datele de care aveti nevoie
+
+### DQL (Data Query Language)
+After the testing process, I deleted the data that was no longer relevant in order to preserve the database clean:
+
+Inserati aici toate instructiunile de DELETE pe care le-ati scris folosind filtrarile necesare astfel incat sa stergeti doar datele de care aveti nevoie
+
+In order to simulate various scenarios that might happen in real life I created the following queries that would cover multiple potential real-life situations:
+
+Inserati aici toate instructiunile de SELECT pe care le-ati scris folosind filtrarile necesare astfel incat sa extrageti doar datele de care aveti nevoie Incercati sa acoperiti urmatoarele:
+- where
+- AND
+- OR
+- NOT
+- like
+- inner join
+- left join
+- OPTIONAL: right join
+- OPTIONAL: cross join
+- functii agregate
+- group by
+- having
+- OPTIONAL DAR RECOMANDAT: Subqueries - nu au fost in scopul cursului. Puteti sa consultati tutorialul asta si daca nu intelegeti ceva contactati fie trainerul, fie coordonatorul de grupa
+
+### Conclusions
+Inserati aici o concluzie cu privire la ceea ce ati lucrat, gen lucrurile pe care le-ati invatat, lessons learned, un rezumat asupra a ceea ce ati facut si orice alta informatie care vi se pare relevanta pentru o concluzie finala asupra a ceea ce ati lucrat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO DEPARTAMENTE (nume_departament, data_infiintarii, buget_anual, functie, contact, locatie) VALUES
+('IT', '2005-06-15', 500000, 'Suport Tehnic', 40712345678, 'București'),
+('HR', '2010-03-10', 300000, 'Resurse Umane', 40723456789, 'Cluj-Napoca'),
+('Finanțe', '2008-11-20', 700000, 'Gestionare Finanțe', 40734567890, 'Timișoara'),
+('Marketing', '2012-08-05', 400000, 'Promovare', 40745678901, 'Iași'),
+('Vânzări', '2007-01-30', 600000, 'Gestionare Vânzări', 40756789012, 'Constanța');
+
+
 
 
 
@@ -69,18 +243,6 @@ INSERT INTO ANGAJATI (nume, prenume, data_nasterii, tara_de_origine, oras_de_ori
 
 
 
-create table MASINI (
-numar_inmatriculare varchar(40) primary key,
-id_angajat int,
-marca_auto varchar (15),
-model_auto varchar (20),
-an_fabricatie int,
-kilometraj int,
-stare_tehnica varchar (10),
-utilizare varchar (20),
-FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id)
-);
-
 
 
 INSERT INTO MASINI (numar_inmatriculare, id_angajat, marca_auto, model_auto, an_fabricatie, kilometraj, stare_tehnica, utilizare) VALUES
@@ -104,17 +266,7 @@ INSERT INTO MASINI (numar_inmatriculare, id_angajat, marca_auto, model_auto, an_
 ('NT-919-IJK', 22, 'Subaru', 'Forester', 2019, 30000, 'Buna', 'Personala'),
 ('B-020-LMN', 23, 'Mitsubishi', 'Outlander', 2016, 72000, 'Buna', 'Serviciu');
 
-create table TELEFOANE (
-numar_inventar int primary key,
-id_angajat int,
-marca_tel varchar (10),
-model_tel varchar (15),
-data_achizitie date,
-numar_tel bigint,
-stare varchar (10),
-data_ultima_actualizare_software date,
-FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id)
-);
+
 
 
 
@@ -136,18 +288,7 @@ INSERT INTO TELEFOANE (numar_inventar, id_angajat, marca_tel, model_tel, data_ac
 (1015, 15, 'Nokia', '6.2', '2020-01-20', 40756784210, 'Buna', '2023-01-20');
 
 
-CREATE TABLE TRAINING (
-    id_training INT PRIMARY KEY AUTO_INCREMENT,
-    nume_training VARCHAR(50),
-    data_incepere DATE,
-    data_sfarsit DATE,
-    locatie VARCHAR(50),
-    departament_responsabil VARCHAR(20),
-    numar_participanti INT,
-    instructor VARCHAR(50),
-    contact_instructor BIGINT,
-    descriere TEXT
-);
+
 
 
 INSERT INTO TRAINING (nume_training, data_incepere, data_sfarsit, locatie, departament_responsabil, numar_participanti, instructor, contact_instructor, descriere) VALUES
@@ -160,14 +301,6 @@ INSERT INTO TRAINING (nume_training, data_incepere, data_sfarsit, locatie, depar
 
 
 
-CREATE TABLE ANGAJATI_TRAINING (
-    id_angajat INT,
-    id_training INT,
-    data_participare DATE,
-    PRIMARY KEY (id_angajat, id_training),
-    FOREIGN KEY (id_angajat) REFERENCES ANGAJATI(id),
-    FOREIGN KEY (id_training) REFERENCES TRAINING(id_training)
-);
 
 INSERT INTO ANGAJATI_TRAINING (id_angajat, id_training, data_participare) VALUES
 (1, 1, '2024-07-01'),
@@ -186,17 +319,6 @@ INSERT INTO ANGAJATI_TRAINING (id_angajat, id_training, data_participare) VALUES
 (1, 3, '2024-09-15'),
 (2, 5, '2024-11-05');
 
-ALTER TABLE ANGAJATI
-DROP COLUMN oras_de_origine;
-
-ALTER TABLE TELEFOANE
-RENAME COLUMN data_ultima_actualizare_software TO ultima_actualizare;
-
-ALTER TABLE MASINI
-MODIFY COLUMN numar_inmatriculare VARCHAR(20);
-
-ALTER TABLE DEPARTAMENTE
-RENAME COLUMN functie TO rolul_departamentului;
 
 
 
