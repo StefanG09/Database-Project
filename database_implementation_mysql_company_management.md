@@ -438,6 +438,4 @@ WHERE tara_de_origine = 'Regatul Unit';
 ```
 
 ### Conclusions
-Inserati aici o concluzie cu privire la ceea ce ati lucrat, gen lucrurile pe care le-ati invatat, lessons learned, un rezumat asupra a ceea ce ati facut si orice alta informatie care vi se pare relevanta pentru o concluzie finala asupra a ceea ce ati lucrat
-
-
+The aim of this project was to design and manage a database to streamline the administration of human resources, equipment, and departments. By organizing critical information into interconnected tables, we created a system that ensures efficient data management and reporting, thereby enhancing overall productivity.
