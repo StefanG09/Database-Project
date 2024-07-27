@@ -146,70 +146,18 @@ In order to be able to use the database I populated the tables with various data
 
 Below you can find all the insert instructions that were created in the scope of this project:
 
-Inserati aici toate instructiunile de INSERT pe care le-ati scris. Incercati sa folositi atat insert pe toate coloanele (fara sa precizati pe ce coloane se face insert) cat si insert pe cateva coloane (care necesita mentionarea explicita a coloanelor pe care se face insert). De asemenea, incercati sa acoperiti situatia in care inserati mai multe randuri in acelasi timp
-
-After the insert, in order to prepare the data to be better suited for the testing process, I updated some data in the following way:
-
-Inserati aici toate instructiunile de UPDATE pe care le-ati scris folosind filtrarile necesare astfel incat sa actualizati doar datele de care aveti nevoie
-
-### DQL (Data Query Language)
-After the testing process, I deleted the data that was no longer relevant in order to preserve the database clean:
-
-Inserati aici toate instructiunile de DELETE pe care le-ati scris folosind filtrarile necesare astfel incat sa stergeti doar datele de care aveti nevoie
-
-In order to simulate various scenarios that might happen in real life I created the following queries that would cover multiple potential real-life situations:
-
-Inserati aici toate instructiunile de SELECT pe care le-ati scris folosind filtrarile necesare astfel incat sa extrageti doar datele de care aveti nevoie Incercati sa acoperiti urmatoarele:
-- where
-- AND
-- OR
-- NOT
-- like
-- inner join
-- left join
-- OPTIONAL: right join
-- OPTIONAL: cross join
-- functii agregate
-- group by
-- having
-- OPTIONAL DAR RECOMANDAT: Subqueries - nu au fost in scopul cursului. Puteti sa consultati tutorialul asta si daca nu intelegeti ceva contactati fie trainerul, fie coordonatorul de grupa
-
-### Conclusions
-Inserati aici o concluzie cu privire la ceea ce ati lucrat, gen lucrurile pe care le-ati invatat, lessons learned, un rezumat asupra a ceea ce ati facut si orice alta informatie care vi se pare relevanta pentru o concluzie finala asupra a ceea ce ati lucrat
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 INSERT INTO DEPARTAMENTE (nume_departament, data_infiintarii, buget_anual, functie, contact, locatie) VALUES
 ('IT', '2005-06-15', 500000, 'Suport Tehnic', 40712345678, 'București'),
 ('HR', '2010-03-10', 300000, 'Resurse Umane', 40723456789, 'Cluj-Napoca'),
 ('Finanțe', '2008-11-20', 700000, 'Gestionare Finanțe', 40734567890, 'Timișoara'),
 ('Marketing', '2012-08-05', 400000, 'Promovare', 40745678901, 'Iași'),
 ('Vânzări', '2007-01-30', 600000, 'Gestionare Vânzări', 40756789012, 'Constanța');
+```
 
 
 
-
-
+```
 INSERT INTO ANGAJATI (nume, prenume, data_nasterii, tara_de_origine, oras_de_origine, sex, adresa_actuala, numar_telefon, departament, functie) VALUES
 ('Popescu', 'Ion', '1985-05-12', 'România', 'București', 'M', 'Strada X, Nr. 10', '40712345678', 'IT', 'Dezvoltator'),
 ('Ionescu', 'Maria', '1990-03-25', 'România', 'Cluj', 'F', 'Strada Y, Nr. 5', '40722345678', 'HR', 'Recrutor'),
@@ -239,12 +187,12 @@ INSERT INTO ANGAJATI (nume, prenume, data_nasterii, tara_de_origine, oras_de_ori
 ('Dumitru', 'Mihai', '1984-08-12', 'România', 'Iași', 'M', 'Strada X, Nr. 210', '40745678901', 'IT', 'Inginer'),
 ('Larsen', 'Karin', '1985-12-17', 'Danemarca', 'Esbjerg', 'F', 'Strada Y, Nr. 220', '45256789012', 'HR', 'Manager'),
 ('Weber', 'Tim', '1982-10-09', 'Germania', 'Dusseldorf', 'M', 'Strada Z, Nr. 230', '49156789012', 'Finanțe', 'Consultant');
+```
 
 
 
 
-
-
+```
 INSERT INTO MASINI (numar_inmatriculare, id_angajat, marca_auto, model_auto, an_fabricatie, kilometraj, stare_tehnica, utilizare) VALUES
 ('B-123-XYZ', 1, 'Dacia', 'Duster', 2018, 50000, 'Buna', 'Serviciu'),
 ('CJ-456-ABC', 2, 'Volkswagen', 'Golf', 2017, 60000, 'Buna', 'Personala'),
@@ -265,11 +213,11 @@ INSERT INTO MASINI (numar_inmatriculare, id_angajat, marca_auto, model_auto, an_
 ('B-818-FGH', 21, 'Suzuki', 'Vitara', 2018, 50000, 'Buna', 'Serviciu'),
 ('NT-919-IJK', 22, 'Subaru', 'Forester', 2019, 30000, 'Buna', 'Personala'),
 ('B-020-LMN', 23, 'Mitsubishi', 'Outlander', 2016, 72000, 'Buna', 'Serviciu');
+```
 
 
 
-
-
+```
 INSERT INTO TELEFOANE (numar_inventar, id_angajat, marca_tel, model_tel, data_achizitie, numar_tel, stare, data_ultima_actualizare_software) VALUES
 (1001, 1, 'Apple', 'iPhone 12', '2021-01-15', 40712345678, 'Buna', '2023-01-15'),
 (1002, 2, 'Samsung', 'Galaxy S21', '2021-02-10', 40723456789, 'Buna', '2023-02-10'),
@@ -286,22 +234,22 @@ INSERT INTO TELEFOANE (numar_inventar, id_angajat, marca_tel, model_tel, data_ac
 (1013, 13, 'Huawei', 'P40', '2021-02-25', 40734562098, 'Buna', '2023-02-25'),
 (1014, 14, 'Xiaomi', 'Mi 9', '2019-05-30', 40745673109, 'Buna', '2022-05-30'),
 (1015, 15, 'Nokia', '6.2', '2020-01-20', 40756784210, 'Buna', '2023-01-20');
+```
 
 
 
-
-
+```
 INSERT INTO TRAINING (nume_training, data_incepere, data_sfarsit, locatie, departament_responsabil, numar_participanti, instructor, contact_instructor, descriere) VALUES
 ('Curs de Programare Java', '2024-07-01', '2024-07-05', 'Sala 101', 'IT', 20, 'Ion Popescu', 40712345678, 'Curs intensiv de programare în limbajul Java.'),
 ('Training de Management', '2024-08-10', '2024-08-12', 'Sala de conferințe', 'HR', 15, 'Maria Ionescu', 40723456789, 'Training pentru dezvoltarea abilităților de management.'),
 ('Workshop Finanțe Avansate', '2024-09-15', '2024-09-17', 'Sala 205', 'Finanțe', 25, 'Hans Schmidt', 491512345678, 'Workshop avansat pentru analiza financiară.'),
 ('Curs de Marketing Digital', '2024-10-20', '2024-10-22', 'Sala 305', 'Marketing', 30, 'Pierre Dubois', 33612345678, 'Curs despre strategiile moderne de marketing digital.'),
 ('Sesiune de Vânzări Eficiente', '2024-11-05', '2024-11-07', 'Sala 102', 'Vânzări', 20, 'Luis Garcia', 34612345678, 'Sesiune de training pentru tehnici eficiente de vânzări.');
+```
 
 
 
-
-
+```
 INSERT INTO ANGAJATI_TRAINING (id_angajat, id_training, data_participare) VALUES
 (1, 1, '2024-07-01'),
 (1, 2, '2024-08-10'),
@@ -318,6 +266,67 @@ INSERT INTO ANGAJATI_TRAINING (id_angajat, id_training, data_participare) VALUES
 (3, 4, '2024-10-20'),
 (1, 3, '2024-09-15'),
 (2, 5, '2024-11-05');
+```
+
+After the insert, in order to prepare the data to be better suited for the testing process, I updated some data in the following way:
+
+```
+UPDATE telefoane
+SET stare = 'Defect'
+WHERE marca_tel IN ('Huawei', 'Samsung');
+```
+
+```
+UPDATE masini
+SET kilometraj = kilometraj + 10000, stare_tehnica = 'Buna'
+WHERE numar_inmatriculare = 'IS-101-GHI';
+```
+
+### DQL (Data Query Language)
+In order to simulate various scenarios that might happen in real life I created the following queries that would cover multiple potential real-life situations:
+
+Inserati aici toate instructiunile de SELECT pe care le-ati scris folosind filtrarile necesare astfel incat sa extrageti doar datele de care aveti nevoie Incercati sa acoperiti urmatoarele:
+- where
+- AND
+- OR
+- NOT
+- like
+- inner join
+- left join
+- OPTIONAL: right join
+- OPTIONAL: cross join
+- functii agregate
+- group by
+- having
+- OPTIONAL DAR RECOMANDAT: Subqueries - nu au fost in scopul cursului. Puteti sa consultati tutorialul asta si daca nu intelegeti ceva contactati fie trainerul, fie coordonatorul de grupa
+
+After the testing process, I deleted the data that was no longer relevant in order to preserve the database clean:
+
+```
+DELETE FROM angajati_training
+WHERE id_angajat = 6;
+```
+```
+DELETE
+FROM masini
+WHERE id_angajat IN (
+SELECT id 
+FROM angajati 
+WHERE tara_de_origine = 'Regatul Unit');
+
+DELETE
+FROM telefoane
+WHERE id_angajat IN (
+SELECT id 
+FROM angajati 
+WHERE tara_de_origine = 'Regatul Unit');
+
+DELETE FROM angajati
+WHERE tara_de_origine = 'Regatul Unit';
+```
+
+### Conclusions
+Inserati aici o concluzie cu privire la ceea ce ati lucrat, gen lucrurile pe care le-ati invatat, lessons learned, un rezumat asupra a ceea ce ati facut si orice alta informatie care vi se pare relevanta pentru o concluzie finala asupra a ceea ce ati lucrat
 
 
 
@@ -361,14 +370,6 @@ ON angajati.id = angajati_training.id_angajat
 INNER JOIN training
 ON  angajati_training.id_training = training.id_training;
 
-UPDATE telefoane
-SET stare = 'Defect'
-WHERE marca_tel IN ('Huawei', 'Samsung');
-
-UPDATE masini
-SET kilometraj = kilometraj + 10000, stare_tehnica = 'Buna'
-WHERE numar_inmatriculare = 'IS-101-GHI';
-
 
 SELECT id, prenume, nume, functie, sex
 FROM angajati
@@ -407,26 +408,5 @@ SELECT *
 FROM telefoane
 WHERE marca_tel = 'Apple';
 
-DELETE FROM angajati_training
-WHERE id_angajat = 6;
 
--- Caut daca angajatii englezi au masini sau telefoane
--- Inainte de a fi dati afara (prin DELETE)
-
-DELETE
-FROM masini
-WHERE id_angajat IN (
-SELECT id 
-FROM angajati 
-WHERE tara_de_origine = 'Regatul Unit');
-
-DELETE
-FROM telefoane
-WHERE id_angajat IN (
-SELECT id 
-FROM angajati 
-WHERE tara_de_origine = 'Regatul Unit');
-
-DELETE FROM angajati
-WHERE tara_de_origine = 'Regatul Unit';
 
